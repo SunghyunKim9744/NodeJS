@@ -35,15 +35,42 @@
 // })
 // console.log("서버가 시작되었습니다. localhost:3000");
 
+// const http = require("http");
+// const express = require("express");
+// const homeController = require("./controllers/HomeController.js");
+// let app = express();
+
+// // http+express의 기능을 사용 
+// let server = http.createServer(app);
+// server.listen(3000);
+// app.use("/index",(req,res,next)=>{
+//     let list = [
+//         {id:1, title:"hello"},
+//         {id:2, title:"sads"}
+//     ];
+//     res.end("Hello Index");
+// });
+
+// /index , /customer/notice/list, edit ...
+// 라우터롤 사용하지 않았을 때, -> url마다 호출되는 함수를 일일히 정해줘야함.
+//app.use("/index",homeController.index);
+
+// 라우터 사용
+//app.use("/",homeController);
+
+
 const http = require("http");
 const express = require("express");
-
+const homeController = require("./controllers/HomeController.js");
 let app = express();
-
+// ejs 경로 설정
+console.log(__dirname);
+const path = require("path"); // path ->운영체제에 맞는 구분자 경로
+app.set("views",path.join(__dirname,"views"));
 // http+express의 기능을 사용 
 let server = http.createServer(app);
 server.listen(3000);
 
-app.use("/index",(req,res,next)=>{
-    
-})
+app.use("/",homeController);
+
+
