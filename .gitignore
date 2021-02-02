@@ -6498,3 +6498,13 @@ newlecture-backend/node_modules/vary/LICENSE
 newlecture-backend/node_modules/vary/package.json
 newlecture-backend/node_modules/vary/README.md
 .vscode/settings.json
+newlecture-backend/node_modules/cors/CONTRIBUTING.md
+newlecture-backend/node_modules/cors/HISTORY.md
+newlecture-backend/node_modules/cors/LICENSE
+newlecture-backend/node_modules/cors/package.json
+newlecture-backend/node_modules/cors/README.md
+newlecture-backend/node_modules/cors/lib/index.js
+newlecture-backend/node_modules/object-assign/index.js
+newlecture-backend/node_modules/object-assign/license
+newlecture-backend/node_modules/object-assign/package.json
+newlecture-backend/node_modules/object-assign/readme.md

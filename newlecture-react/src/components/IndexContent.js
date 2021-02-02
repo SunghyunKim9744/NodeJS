@@ -1,4 +1,4 @@
-const Body=()=>{
+const IndexContent=()=>{
     return (
         <div>
             <div id="visual" className="">
@@ -152,4 +152,4 @@ const Body=()=>{
     );
 };
 
-export default Body;
+export default IndexContent;

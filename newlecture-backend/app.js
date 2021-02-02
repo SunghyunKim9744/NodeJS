@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+// cors 사용을 설정
+let cors = require("cors");
 
 var homeController = require('./controllers/HomeController');
 var customerNoticeController = require('./controllers/customer/NoticeController');
@@ -17,6 +19,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
+// cors 사용
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

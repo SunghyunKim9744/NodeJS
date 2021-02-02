@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 const Header = ()=>{
     return <header id="header">
         
@@ -41,7 +43,7 @@ const Header = ()=>{
                     <nav id="acount-menu">
                         <h1 className="hidden">회원메뉴</h1>
                         <ul>
-                            <li><a href="/index.html">HOME</a></li>
+                            <li><Link to="/">HOME</Link></li>
                             <li><a href="/member/login.html">로그인</a></li>
                             <li><a href="/member/agree.html">회원가입</a></li>
                         </ul>
@@ -51,7 +53,7 @@ const Header = ()=>{
                         <h1 className="hidden">고객메뉴</h1>
                         <ul className="linear-layout">
                             <li><a href="/member/home"><img src="/images/txt-mypage.png" alt="마이페이지" /></a></li>
-                            <li><a href="/notice/list.html"><img src="/images/txt-customer.png" alt="고객센터" /></a></li>
+                            <li><Link to="/customer/notice/list"><img src="/images/txt-customer.png" alt="고객센터" /></Link></li>
                         </ul>
                     </nav>
 
