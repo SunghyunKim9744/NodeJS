@@ -10,10 +10,10 @@ function query(sql) {
 
         connection.query(sql, function (error, results, fields) {
             if (error) reject(error);
-            results.forEach(notice => {
-                console.log(`작성자 : ${notice.writerId}, 제목 : ${notice.title}`);
+            // results.forEach(notice => {
+            //     console.log(`작성자 : ${notice.writerId}, 제목 : ${notice.title}`);
 
-            });
+            // });
             resolve(results);
             //res.render("customer/notice/list.ejs", { list: results });
         });
