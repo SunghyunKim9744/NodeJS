@@ -26,19 +26,25 @@ export default class Login extends React.Component {
             result=>result.json())
         .then(
             member=>{
-                console.log(bcrypt.compareSync(pwd,member.pwd));
+                //console.log(bcrypt.compareSync(pwd,member.pwd));
                 if(bcrypt.compareSync(pwd,member.pwd)){
                     SecurityContext.userName = uid;
                     SecurityContext.authorties = ['admin','teacher','user'];
+                    
+                    // console.log(this.props.location);
+                    // console.log(this.props.location.state.returnURL);
+                    let returnURL = this.props.location.state.returnURL || "/";
+                   
+                    this.props.history.push(returnURL);
                 }
                     
                 
-                console.log(SecurityContext.userName);
+                //console.log(SecurityContext.userName);
             }
         ,err=>{console.log(err);}
         );
 
-        console.log("login...");
+        //console.log("login...");
 
     }
     render() {
