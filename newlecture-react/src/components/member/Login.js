@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import bcrypt from 'bcryptjs';
 import SecurityContext from '../security/SecurityContext';
+import AuthStore from "../../reducers/AuthStore";
 
 export default class Login extends React.Component {
     constructor() {
@@ -21,6 +22,7 @@ export default class Login extends React.Component {
         let uid = this.uidInput.current.value;
         let pwd = this.pwdInput.current.value;
 
+        AuthStore.store.dispatch({type:1,userName:uid}); 
         fetch(`http://localhost:3000/api/member/${uid}`)
         .then(
             result=>result.json())
@@ -28,8 +30,8 @@ export default class Login extends React.Component {
             member=>{
                 //console.log(bcrypt.compareSync(pwd,member.pwd));
                 if(bcrypt.compareSync(pwd,member.pwd)){
-                    SecurityContext.userName = uid;
-                    SecurityContext.authorties = ['admin','teacher','user'];
+                    // SecurityContext.userName = uid;
+                    // SecurityContext.authorties = ['admin','teacher','user'];
                     
                     // console.log(this.props.location);
                     // console.log(this.props.location.state.returnURL);
