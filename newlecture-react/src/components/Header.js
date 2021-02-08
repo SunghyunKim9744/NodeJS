@@ -1,27 +1,48 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import SecurityContext from "./security/SecurityContext";
-import AuthStore from "../reducers/AuthStore";
-class Header extends Component{
+// ---------------- 1 ------------------
+//import AuthStore from "../reducers/AuthStore";
 
-    constructor(){
+
+// --------- 다른 방식 (Provider,Connect)
+import { connect } from "react-redux";
+class Header extends Component {
+
+    constructor() {
         super();
-        this.state = {authenticated:false};
-        console.log(this.state);
+        this.state = { authenticated: false };
+        //console.log(this.state);
     }
 
-    componentDidMount(){
-        AuthStore.store.subscribe(() => {  // 상태가 바뀌었을 때 호출되는 이벤트, Header에서
-            let store = AuthStore.store.getState();
-            this.setState({authenticated:store.userName?true:false});
-        });
+    componentDidMount() {
+        // ----------------- 1 전역 state:redux store를 전역객체로 사용------------------
+        // AuthStore.store.subscribe(() => {  // 상태가 바뀌었을 때 호출되는 이벤트, Header에서
+        //     let store = AuthStore.store.getState();
+        //     this.setState({authenticated:store.userName?true:false});
+        // });
+
+
+    }
+
+    logoutClickHandler(e) {
+        this.props.logout();
+        this.props.history.push("/index");
     }
     render() {
         let loginStateLink;
-        if (this.state.authenticated != true)
+
+        let authenticated = this.props.userName ? true : false;
+        if (authenticated != true)
             loginStateLink = <li><Link to="/member/login">로그인</Link></li>;
         else
-            loginStateLink = <li><Link to="/member/logout">로그아웃</Link></li>;
+            loginStateLink = <li><Link to="/member/logout" onClick={this.logoutClickHandler.bind(this)}>로그아웃</Link></li>;
+
+        // ------ 전역 state:redux store를 전역객체로 사용
+        // if (this.state.authenticated != true)
+        //     loginStateLink = <li><Link to="/member/login">로그인</Link></li>;
+        // else
+        //     loginStateLink = <li><Link to="/member/logout">로그아웃</Link></li>;
         return <header id="header">
 
             {/* -------------- header ----------- */}
@@ -87,5 +108,22 @@ class Header extends Component{
     }
 }
 
+// ----------- 1 전역 state:redux store를 전역객체로 사용------------
+//export default Header;
 
-export default Header;
+
+// ------------------- 다른 방식(Provider,Connect) =>전역 state를 connect로 연결해서 사용
+const mapStateToProps = (store) => {
+    return {
+        userName: store.userName
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout:()=>{
+            dispatch({type:2}); // 로그아웃 type
+        }
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

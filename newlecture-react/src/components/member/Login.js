@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import bcrypt from 'bcryptjs';
 import SecurityContext from '../security/SecurityContext';
 import AuthStore from "../../reducers/AuthStore";
+import { connect } from "react-redux";
 
-export default class Login extends React.Component {
+class Login extends React.Component {
     constructor() {
         super();
-        this.state = {m:{}};
+        //this.state = {m:{}};
         this.uidInput = React.createRef();
         this.pwdInput = React.createRef();
 
@@ -22,7 +23,7 @@ export default class Login extends React.Component {
         let uid = this.uidInput.current.value;
         let pwd = this.pwdInput.current.value;
 
-        AuthStore.store.dispatch({type:1,userName:uid}); 
+        
         fetch(`http://localhost:3000/api/member/${uid}`)
         .then(
             result=>result.json())
@@ -30,11 +31,19 @@ export default class Login extends React.Component {
             member=>{
                 //console.log(bcrypt.compareSync(pwd,member.pwd));
                 if(bcrypt.compareSync(pwd,member.pwd)){
+
+                    // 방법 1 : 전역변수 사용
                     // SecurityContext.userName = uid;
                     // SecurityContext.authorties = ['admin','teacher','user'];
                     
                     // console.log(this.props.location);
                     // console.log(this.props.location.state.returnURL);
+
+                    // 방법2 : 전역 state:redux store를 전역객체로 사용
+                    //AuthStore.store.dispatch({type:1,userName:uid}); 
+
+                    // 방법 3 : 전역 state를 connect로 연결해서 사용
+                    this.props.login(uid);
                     let returnURL = this.props.location.state.returnURL || "/";
                    
                     this.props.history.push(returnURL);
@@ -104,3 +113,20 @@ export default class Login extends React.Component {
     </main>;
     }
 };
+
+
+const mapStateToProps=(store)=>{
+    // 여기선 의미없음.
+    return {
+        userName:store.userName
+    }
+};
+
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        login:(uid)=>{
+            dispatch({type:1,userName:uid});
+        }
+    }
+};
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

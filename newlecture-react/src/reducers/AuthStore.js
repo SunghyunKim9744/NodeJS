@@ -1,3 +1,4 @@
+// ------------- 2 --------------
 // import { createStore } from "redux";
 
 // class AuthStore {
@@ -36,4 +37,6 @@
 // }
 // export default new AuthStore();
 
+
+// ------------------- 1 ------------------
 export default {store:null};

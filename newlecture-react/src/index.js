@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import {createStore} from 'redux';
-import AuthStore from './reducers/AuthStore';
-import AuthReducer from './reducers/AuthReducer';
+// import {createStore} from 'redux';
+// import AuthStore from './reducers/AuthStore';
+// import AuthReducer from './reducers/AuthReducer';
 
 
-// ----------------- 1------------------
- AuthStore.store = createStore(AuthReducer);
+// ----------------- 1 전역 state:redux store를 전역객체로 사용------------------
+//AuthStore.store = createStore(AuthReducer);
 // AuthStore.store.subscribe(()=>{       // 상태가 바뀌었을 때 호출되는 이벤트, Header에서
 //   console.log(AuthStore.store.getState());
 // });
@@ -20,7 +20,7 @@ import AuthReducer from './reducers/AuthReducer';
 // AuthStore.store.dispatch({type:1,userName:"newlec"}); 
 // AuthStore.store.dispatch({type:2,userName:"dragon"});
 
-// ---------------- 2 -----------
+// ---------------- 2 => 1번을 집중화하여 클래스로 만듬-----------
 
 // AuthStore.create();
 // AuthStore.addEventListener((state)=>{
@@ -30,7 +30,7 @@ import AuthReducer from './reducers/AuthReducer';
 // AuthStore.setState(1,{userName:"newlec"});
 // AuthStore.setState(2,{userName:"dragon"});
 
-// 아래와 동일 ------------ 3 ---------------
+// 아래와 동일 ------------ 3(전역X) ---------------
 
 // import AuthReducer from './reducers/AuthReducer';
 
@@ -46,10 +46,19 @@ import AuthReducer from './reducers/AuthReducer';
 // store.dispatch({type:1,userName:"newlec"}); 
 // store.dispatch({type:2,userName:"dragon"});
 
+
+// ------------ 다른 방식(Provider,Connect) => 전역 state를 connect로 연결해서 사용-------------
+import {createStore} from 'redux';
+import AuthReducer from './reducers/AuthReducer';
+import {Provider} from "react-redux";
+
+const store = createStore(AuthReducer);
 ReactDOM.render(
+  <Provider store={store}>
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
